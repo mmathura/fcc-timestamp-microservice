@@ -31,6 +31,8 @@ http.createServer((req, res) => {
         // console.log("s_date = " + s_date); // for debugging
         res.end("{\"unix\" : \"" + unix_time + "\", \"normal\" : \"" + s_date + "\"}"); 
       }
+      else
+        res.end(null);
     }
     else { // if is a number 
       var d = new Date(Number(s_url)); // 1451606400000
