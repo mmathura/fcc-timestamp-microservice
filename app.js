@@ -2,6 +2,17 @@
 
 var http = require('http');
 
+function print_date(d) {
+  var month = ["January", "February", "March", "April", "May", "June", 
+               "July", "August", "September", "October", "November", "December"];
+  return month[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+}
+
+function print_json(s, d) { 
+  // {"unix" : 1451606400, "natural" : "January 1, 2016"}
+  return "{\"unix\" : \"" + s + "\", \"normal\" : \"" + print_date(d) + "\"}";
+}
+
 http.createServer((req, res) => {
   
   res.statusCode = 200;
@@ -9,9 +20,6 @@ http.createServer((req, res) => {
     
   var s = req.url;
   // console.log("s = " + s); // for debugging
-  
-  var month = ["January", "February", "March", "April", "May", "June", 
-               "July", "August", "September", "October", "November", "December"];
       
   if (s === "/" || s === "/favicon.ico") {
     res.end(null);
@@ -23,13 +31,12 @@ http.createServer((req, res) => {
     // console.log("unix_time = " + unix_time); // for debugging
     if (!Number.isNaN(unix_time)) { // determine if string is not a number
       var d = new Date(Number(unix_time));
-      //console.log("d (datestring) = " + d); // for debugging
-      // console.log("d.getTime() = " + d.getTime()); // for debugging
+      // console.log("d (datestring) = " + d); // for debugging
+      // console.log("d (gettime) = " + d.getTime()); // for debugging
       if (d.getTime() > 0) {
-        // {"unix" : 1451606400, "natural" : "January 1, 2016"}
-        var s_date = month[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
-        // console.log("s_date = " + s_date); // for debugging
-        res.end("{\"unix\" : \"" + unix_time + "\", \"normal\" : \"" + s_date + "\"}"); 
+        // console.log("print_date = " + print_date(d)); // for debugging
+        // console.log("print_json (unix_time) = " + print_json(unix_time, d)); // for debugging
+        res.end(print_json(unix_time, d));
       }
       else
         res.end(null);
@@ -37,9 +44,9 @@ http.createServer((req, res) => {
     else { // if is a number 
       var d = new Date(Number(s_url)); // 1451606400000
       // console.log("d = " + d); // for debugging
-      if (d > 0) { // create funct to print json and pass Date d 
-        res.end("{\"unix\" : \"" + s_url + "\", \"normal\" : \"" + month[d.getMonth()] +  
-                " " + d.getDate() + ", " + d.getFullYear() + "\"}"); 
+      if (d > 0) { 
+        // console.log("print_json (s_url) = " + print_json(s_url, d)); // for debugging
+        res.end(print_json(s_url, d));
       }
       else
         res.end(null);
