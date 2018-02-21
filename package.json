@@ -1,0 +1,17 @@
+{
+	"name": "fcc-learn-npm-package-json",
+	"dependencies": {
+		"express": "^4.14.0"
+	},
+	"main": "app.js",
+	"scripts": {
+		"start": "node app.js"
+	},
+	"engines": {
+		"node": "6.12.3"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://idontknow/todo.git"
+	}
+}
